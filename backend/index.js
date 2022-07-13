@@ -23,7 +23,7 @@ app.use(express.json());
 app.use('/v1/auth', authRoute);
 app.use('/v1/user', userRoute)
 
-app.listen(8000, () => {
+app.listen(process.env.PORT || 8000, () => {
     console.log(`server is running: http://localhost:8000`)
 })
 
