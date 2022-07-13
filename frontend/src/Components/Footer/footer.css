@@ -1,0 +1,57 @@
+/* Footer chưa xong*/
+.home-footer {
+    display: flex;
+    width: 100%;
+    height: 46px;
+    background-color: rgba(0,0,0,.4);
+    padding-left: 34px;
+    padding-right: 34px;
+    margin: 0;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*Left*/
+.footer-left {
+    display: flex;
+}
+
+.home-footer a {
+    padding: 0 6px;
+    color: hsla(0,0%,100%,.7);
+    font-size: 14px;
+    border-bottom: 1px solid transparent;
+}
+
+.home-footer a:hover {
+    color: #72bf00;
+    border-color: #72bf00; 
+}
+
+.col-auto {
+    color: hsla(0,0%,100%,.7);
+}
+
+/*Right*/
+.footer-right {
+    display: flex;
+}
+
+.footer-right-icon {
+    padding-right: 6px;
+}
+
+.home-footer .right-other {
+    font-size: 14px;
+    border-width: 80px;
+    color: hsla(0,0%,100%,.9);
+    padding: 0 10px;
+    border-bottom: 1px solid transparent;
+}
+
+.home-footer .right-other:hover {
+    color: #72bf00;
+    border-color: #72bf00;
+}
+
+  

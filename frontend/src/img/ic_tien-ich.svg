@@ -1,0 +1,30 @@
+<svg id="Ic_tien-ich" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <rect id="Rectangle_180" data-name="Rectangle 180" width="24" height="24" fill="#fff" opacity="0"/>
+  <g id="ic_home_ultilities_black" data-name="ic/home/ultilities/black" transform="translate(2.074 3.199)">
+    <path id="Stroke_1" data-name="Stroke 1" d="M6.223,0A3,3,0,0,0,9.295,2.915,3,3,0,0,0,12.366,0h6.223V6.2a1.175,1.175,0,0,1-1.205,1.144H1.205A1.175,1.175,0,0,1,0,6.2V0Z" transform="translate(0.713 9.589)" fill="#fff"/>
+    <path id="Stroke_3" data-name="Stroke 3" d="M0,3.325V0H16.73V3.325" transform="translate(1.642 4.278)" fill="#fff"/>
+    <path id="Stroke_5" data-name="Stroke 5" d="M0,1.88V0H13.989V1.88" transform="translate(3.012 0.385)" fill="#fff"/>
+  </g>
+  <style type="text/css" media="screen"> 
+  path[stroke-width*='1.'] {
+      vector-effect: non-scaling-stroke;
+   }  
+   @media (min-width: 40px) {
+      path[stroke-width*='1.'] {
+         stroke-width: 2 !important;
+      }
+   }
+   @media screen and (min-width:0\0) and (min-width: 40px) {
+      path[stroke-width*='1.'] {
+         stroke-width: 1.1 !important;
+      }
+   }
+   @supports (-ms-accelerator: true) or (-ms-ime-align: auto) {
+      @media (min-width: 40px) {
+         path[stroke-width*="1."] {
+         stroke-width: 1.1 !important;
+         }
+      } 
+   }
+  </style>
+</svg>

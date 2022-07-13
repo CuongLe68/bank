@@ -1,0 +1,9 @@
+.container {
+    width: 100%;
+    height: 100%;
+    background-image: url('https://vcbdigibank.vietcombank.com.vn/assets/images/web/img/bg/bg-default.jpg');
+}
+
+h1 {
+    height: 100vh;
+}
