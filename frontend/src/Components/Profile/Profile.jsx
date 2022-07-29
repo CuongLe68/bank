@@ -1,12 +1,524 @@
-import './Profile.css'
+import './Profile.css';
+import { useSelector } from 'react-redux';
+import { logOut } from '../../redux/apiRequest';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { createAxios } from '../../createInstance';
+import { logOutSuccess } from '../../redux/authSlice';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const Profile = () => {
+    const [show, setShow] = useState(false);
+
+    const user = useSelector((state) => state.auth.login.currentUser); //lấy auth từ redux/store.js
+    const accessToken = user?.accessToken;
+    const id = user?._id;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    let axiosJWT = createAxios(user, dispatch, logOutSuccess);
+
+    //Xử lý phần đăng xuất
+    const handleLogout = () => {
+        logOut(dispatch, id, navigate, accessToken, axiosJWT);
+    };
+
+    //Xử lý phần toggle tiền
+    const handleShow = () => {
+        setShow(!show);
+        if (!show) {
+            document.querySelector('.info-card-wrapper-footer-money').innerHTML = `********* VND`;
+        } else {
+            document.querySelector('.info-card-wrapper-footer-money').innerHTML = `${user.currentmoney} VND`;
+        }
+    };
+
+    //Xử lý tự chạy slides
+    let indexOfSlides = 0;
+    let IMG_WIDTH = -1016;
+    let CURRENT_SLIDE = 0;
+    let myInterval = setInterval(() => {
+        if (indexOfSlides < 3) {
+            indexOfSlides++;
+            document.querySelector('.user-header-slide-content').style.transform = `translateX(${
+                indexOfSlides * IMG_WIDTH
+            }px)`;
+        } else {
+            indexOfSlides = 0;
+            document.querySelector('.user-header-slide-content').style.transform = `translateX(${
+                indexOfSlides * IMG_WIDTH
+            }px)`;
+        }
+        CURRENT_SLIDE = indexOfSlides;
+    }, 4000);
+
+    const handleSlidesPrev = () => {
+        clearInterval(myInterval);
+        if (CURRENT_SLIDE > 0) {
+            CURRENT_SLIDE--;
+            document.querySelector('.user-header-slide-content').style.transform = `translateX(${
+                CURRENT_SLIDE * IMG_WIDTH
+            }px)`;
+        } else {
+            CURRENT_SLIDE = 3;
+            document.querySelector('.user-header-slide-content').style.transform = `translateX(${
+                CURRENT_SLIDE * IMG_WIDTH
+            }px)`;
+        }
+    };
+
+    const handleSlidesNext = () => {
+        clearInterval(myInterval);
+        if (CURRENT_SLIDE < 3) {
+            CURRENT_SLIDE++;
+            document.querySelector('.user-header-slide-content').style.transform = `translateX(${
+                CURRENT_SLIDE * IMG_WIDTH
+            }px)`;
+        } else {
+            CURRENT_SLIDE = 0;
+            document.querySelector('.user-header-slide-content').style.transform = `translateX(${
+                CURRENT_SLIDE * IMG_WIDTH
+            }px)`;
+        }
+    };
+
     return (
-        <section className='container'>
-            <h1>Giao diện người dùng</h1>
+        <section className="container">
+            <div className="user-navbar">
+                <Link to="/trangchu" className="user-navbar-top-home user-navbar-top-item">
+                    <img
+                        className="user-navbar-home-icon"
+                        src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_home-border.svg"
+                        alt="trang chủ"
+                    />
+                </Link>
+                <div className="user-navbar-top-utilities user-navbar-top-item">
+                    <img
+                        className="user-navbar-icon"
+                        src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_tien-ich.svg"
+                        alt="tiện ích"
+                    />
+                </div>
+                <div className="user-navbar-top-setting user-navbar-top-item">
+                    <img
+                        className="user-navbar-icon"
+                        src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_caidat.svg"
+                        alt="cài đặt"
+                    />
+                </div>
+                <div className="user-navbar-top-rewards user-navbar-top-item">
+                    <img
+                        className="user-navbar-icon"
+                        src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/other/ic-loyalty-white.svg"
+                        alt="phần thưởng"
+                    />
+                </div>
+                <div className="user-navbar-bottom-contact user-navbar-top-item">
+                    <img
+                        className="user-navbar-icon"
+                        src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_lien-he.svg"
+                        alt="Liên hệ"
+                    />
+                </div>
+                <div className="user-navbar-bottom-language user-navbar-top-item">
+                    <img
+                        className="user-navbar-icon"
+                        src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/img/flag.png"
+                        alt="ngôn ngữ"
+                    />
+                </div>
+                <Link className="user-navbar-bottom-logout user-navbar-top-item" to="/" onClick={handleLogout}>
+                    <img
+                        className="user-navbar-icon"
+                        src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_thoat.svg"
+                        alt="thoát"
+                    />
+                </Link>
+            </div>
+            {/* InFo */}
+            <div className="user-info">
+                <img
+                    className="user-info-logo"
+                    src="https://vcbdigibank.vietcombank.com.vn/assets/images/logo-digibank-white.svg"
+                    alt="logo"
+                />
+                <div className="user-info-user">
+                    <div className="user-image">
+                        <img
+                            src="https://play-lh.googleusercontent.com/nlTUhHmVerpGrB5zoARqnusy4GzAXvERR7RDHjMzm2q2wKouTjNzfOlvoRv7wKIlmtE"
+                            alt=""
+                        />
+                    </div>
+                    <div className="user-hi">Xin chào</div>
+                    <div className="user-name">{user.name}</div>
+                    <div className="user-dec">
+                        Lần đăng nhập gần nhất
+                        <br />
+                        2022-07-15 1:20:21
+                    </div>
+                </div>
+                <div className="user-info-card">
+                    <div className="info-card-title1">
+                        <div className="info-card-title1-dec">Danh sách tài khoản/thẻ</div>
+                        <Link to="/trangchu" className="info-card-title1-link">
+                            Chi tiết
+                        </Link>
+                    </div>
+                    <div className="info-card-title2">
+                        <div className="info-card-title2-dec">Mở tài khoản số chọn</div>
+                        <Link to="/trangchu" className="user-info-icon-right user-info-icon-right-after">
+                            <img
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0LjQxNCcgaGVpZ2h0PSc2LjgyOCc+PHBhdGggZGF0YS1uYW1lPSdQYXRoIDU2MycgZD0nTTEuNDEgMS40MTRsMiAyLTIgMicgZmlsbD0nbm9uZScgc3Ryb2tlPScjNzJiZjAwJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIHN0cm9rZS13aWR0aD0nMicvPjwvc3ZnPg=="
+                                alt=""
+                            />
+                        </Link>
+                    </div>
+                    <div className="info-card-wrapper">
+                        <div className="info-card-wrapper-title">Tài khoản thanh toán</div>
+                        <div className="info-card-wrapper-detail">
+                            <div className="info-card-wrapper-number">0123456789</div>
+                            <Link to="/trangchu" className="user-info-icon-right">
+                                <img
+                                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0LjQxNCcgaGVpZ2h0PSc2LjgyOCc+PHBhdGggZGF0YS1uYW1lPSdQYXRoIDU2MycgZD0nTTEuNDEgMS40MTRsMiAyLTIgMicgZmlsbD0nbm9uZScgc3Ryb2tlPScjNzJiZjAwJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIHN0cm9rZS13aWR0aD0nMicvPjwvc3ZnPg=="
+                                    alt=""
+                                />
+                            </Link>
+                        </div>
+                        <div className="info-card-wrapper-footer">
+                            <div className="info-card-wrapper-footer-title">Số dư</div>
+                            <div className="info-card-wrapper-footer-icon">
+                                <img
+                                    onClick={() => handleShow()}
+                                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNicgaGVpZ2h0PScxNic+PGcgZmlsbD0nbm9uZScgZmlsbC1ydWxlPSdldmVub2RkJyBzdHJva2U9JyM3MkJGMDAnPjxwYXRoIGQ9J00xMC4zNDMgNy40NTNhMi4zNyAyLjM3IDAgMTEtNC43NCAwIDIuMzcgMi4zNyAwIDAxNC43NCAweicvPjxwYXRoIGQ9J00xNC4zODcgNy40NTNzLTIuODcxIDQuMjU1LTYuNDEzIDQuMjU1Yy0zLjU0MiAwLTYuNDE0LTQuMjU1LTYuNDE0LTQuMjU1czIuODctNC4yNTUgNi40MTQtNC4yNTVjMy41NDIgMCA2LjQxMyA0LjI1NSA2LjQxMyA0LjI1NXonLz48L2c+PC9zdmc+"
+                                    alt=""
+                                />
+                                <div className="info-card-wrapper-footer-money">********* VND</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="user-info-contact">
+                    <div className="user-info-contact-icon">
+                        <img
+                            src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/primary/ic_phone-hotline.svg"
+                            alt=""
+                        />
+                    </div>
+                    <div className="user-info-contact-title">
+                        <div className="user-info-contact-title-dec">Dịch vụ khách hàng 24/7</div>
+                        <div className="user-info-contact-title-phone">1900 54 54 13</div>
+                    </div>
+                </div>
+                <div className="user-info-footer">
+                    <div className="user-info-footer-item">
+                        <div className="user-info-footer-item-icon">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_trasoatonline.svg"
+                                alt=""
+                            />
+                        </div>
+                        <div className="user-info-footer-item-title">Tra soát trực tuyến</div>
+                        <Link to="/trangchu" className="user-info-icon-bottom">
+                            <img
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc3JyBoZWlnaHQ9JzQnPjxwYXRoIGRhdGEtbmFtZT0nUGF0aCAzOTEnIGQ9J002LjE0Ni4xNDZhLjUuNSAwIDAxLjcwOC43MDhsLTMgM2EuNS41IDAgMDEtLjY5Mi4wMTVsLTMtMi43NUEuNS41IDAgMDEuODM4LjM4MWwyLjY0NyAyLjQyN3onIGZpbGw9J3JnYmEoMjU1LDI1NSwyNTUsMC43KScvPjwvc3ZnPg=="
+                                alt=""
+                            />
+                        </Link>
+                    </div>
+
+                    <div className="user-info-footer-item" style={{ marginTop: 20 }}>
+                        <div className="user-info-footer-item-icon">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_doingoaite.svg"
+                                alt=""
+                            />
+                        </div>
+                        <div className="user-info-footer-item-title">Tra cứu tỉ giá ngoại tệ</div>
+                        <Link to="/trangchu" className="user-info-footer-item-right">
+                            <img
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0LjQxNCcgaGVpZ2h0PSc2LjgyOCc+PHBhdGggZGF0YS1uYW1lPSdQYXRoIDU2MycgZD0nTTEuNDEgMS40MTRsMiAyLTIgMicgZmlsbD0nbm9uZScgc3Ryb2tlPScjNzJiZjAwJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIHN0cm9rZS13aWR0aD0nMicvPjwvc3ZnPg=="
+                                alt=""
+                            />
+                        </Link>
+                    </div>
+                    <div className="user-info-footer-item" style={{ marginTop: 20 }}>
+                        <div className="user-info-footer-item-icon">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_lai-tiet-kiem.svg"
+                                alt=""
+                            />
+                        </div>
+                        <div className="user-info-footer-item-title">Tính lãi tiết kiệm</div>
+                        <Link to="/trangchu" className="user-info-footer-item-right">
+                            <img
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0LjQxNCcgaGVpZ2h0PSc2LjgyOCc+PHBhdGggZGF0YS1uYW1lPSdQYXRoIDU2MycgZD0nTTEuNDEgMS40MTRsMiAyLTIgMicgZmlsbD0nbm9uZScgc3Ryb2tlPScjNzJiZjAwJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIHN0cm9rZS13aWR0aD0nMicvPjwvc3ZnPg=="
+                                alt=""
+                            />
+                        </Link>
+                    </div>
+                    <div className="user-info-footer-item" style={{ marginTop: 20, paddingBottom: 0, border: 'none' }}>
+                        <div className="user-info-footer-item-icon">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_calendar.svg"
+                                alt=""
+                            />
+                        </div>
+                        <div className="user-info-footer-item-title">Tính lịch trả nợ</div>
+                        <Link to="/trangchu" className="user-info-footer-item-right" style={{ bottom: 2 }}>
+                            <img
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0LjQxNCcgaGVpZ2h0PSc2LjgyOCc+PHBhdGggZGF0YS1uYW1lPSdQYXRoIDU2MycgZD0nTTEuNDEgMS40MTRsMiAyLTIgMicgZmlsbD0nbm9uZScgc3Ryb2tlPScjNzJiZjAwJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIHN0cm9rZS13aWR0aD0nMicvPjwvc3ZnPg=="
+                                alt=""
+                            />
+                        </Link>
+                    </div>
+                </div>
+            </div>
+            {/* Header */}
+            <div className="user-header-navbar">
+                <div className="user-header-navbar-wrapper">
+                    <Link to="/trangchu" className="user-header-navbar-wrapper-logo">
+                        <img src="https://vcbdigibank.vietcombank.com.vn/assets/images/logo-white-type-2.svg" alt="" />
+                    </Link>
+                    <div className="user-header-navbar-wrapper-search">
+                        <input className="user-header-navbar-input" placeholder="Tìm kiếm trong VCB Digibank" />
+                        <img
+                            className="user-header-navbar-wrapper-icon"
+                            src="https://vcbdigibank.vietcombank.com.vn/assets/images/base/icons/search/square/white.svg"
+                            alt="search"
+                        />
+                    </div>
+                </div>
+            </div>
+            {/* Header-navbar */}
+            <div className="user-header">
+                <div className="user-header-slide">
+                    <div className="user-header-slide-left" onClick={handleSlidesPrev}>
+                        <img
+                            className="user-header-slide-btn"
+                            src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.4' d='M35 5L15 25l20 20'/%3E%3C/svg%3E"
+                            alt=""
+                        />
+                    </div>
+                    <div className="user-header-slide-content">
+                        <img
+                            className="user-header-slide-img"
+                            src="https://portal.vietcombank.com.vn/content/personal/KhoAnh/Anh%20CTKM/Sieu%20bao%20uu%20dai%2020%20ty/1080x280-01.jpg"
+                            alt=""
+                        />
+                        <img
+                            className="user-header-slide-img"
+                            src="https://digibankm5.vietcombank.com.vn/get_file/ibomni/banner/MoTK_Top_Banner_Digibank_1080_x_280-01.jpg"
+                            alt=""
+                        />
+                        <img
+                            className="user-header-slide-img"
+                            src="https://digibankm5.vietcombank.com.vn/get_file/ibomni/banner/GRAB_Top_banner_1080x280_up.jpg"
+                            alt=""
+                        />
+                        <img
+                            className="user-header-slide-img"
+                            src="https://digibankm5.vietcombank.com.vn/get_file/ibomni/banner/SMARTOTP_Top_banner_1080x280_Web.jpg"
+                            alt=""
+                        />
+                    </div>
+                    <div className="user-header-slide-right" onClick={handleSlidesNext}>
+                        <img
+                            className="user-header-slide-btn"
+                            src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.4' d='M15 5l20 20-20 20'/%3E%3C/svg%3E"
+                            alt=""
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="user-content">
+                {/* content 1 */}
+                <div className="user-content-wrapper">
+                    <div className="user-content-wrapper-item">
+                        <div className="user-content-wrapper-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_chuyen-tien.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-desc">Chuyển tiền trong VCB</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-item">
+                        <div className="user-content-wrapper-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic-loyalty.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-desc">VCB Rewards</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-item">
+                        <div className="user-content-wrapper-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_chuyen-tien-nhanh.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-desc">Chuyển tiền nhanh 247 ngoài VCB</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-item">
+                        <div className="user-content-wrapper-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_chuyen-tien-ngoai.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-desc">Chuyển tiền ngoài VCB</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-item">
+                        <div className="user-content-wrapper-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_cai-dat-han-muc-ct.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-desc">Cài đặt hạn mức chuyển tiền</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-item">
+                        <div className="user-content-wrapper-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_mo-tiet-kiem.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-desc">Mở tiết kiệm</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-add">
+                        <div className="user-content-wrapper-add-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_caidat-border.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-desc">Cài đặt chức năng nổi bật</div>
+                        </div>
+                    </div>
+
+                    {/* block */}
+                    <div className="user-content-wrapper-block">
+                        <div className="user-content-wrapper-block-img1">
+                            <p className="user-content-wrapper-block-img1-title">Chuyển tiền</p>
+                        </div>
+                        <div className="user-content-wrapper-block-img2">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_info-2.svg"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+
+                    {/* content 2 */}
+                    <div className="user-content-wrapper-bank">
+                        <div className="user-content-wrapper-bank-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_chuyen-tien.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-bank-desc">Chuyển tiền trong VCB</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-bank">
+                        <div className="user-content-wrapper-bank-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_chuyen-tien-nhanh.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-bank-desc">Chuyển tiền nhanh 247 ngoài VCB</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-bank">
+                        <div className="user-content-wrapper-bank-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_chuyen-tien-ngoai.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-bank-desc">Chuyển tiền ngoài VCB</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-bank">
+                        <div className="user-content-wrapper-bank-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_chuyen-tien-cmt.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-bank-desc">Chuyển tiền mặt</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-bank">
+                        <div className="user-content-wrapper-bank-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_chuyen-tien-tu-thien.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-bank-desc">Chuyển tiền từ thiện</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-bank">
+                        <div className="user-content-wrapper-bank-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_trang-thai-lenh-chuyen-tien.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-bank-desc">Trạng thái chuyển tiền</div>
+                        </div>
+                    </div>
+                    <div className="user-content-wrapper-bank">
+                        <div className="user-content-wrapper-bank-img">
+                            <img
+                                src="https://vcbdigibank.vietcombank.com.vn/assets/images/web/icons/white/ic_cai-dat-han-muc-ct.svg"
+                                alt=""
+                            />
+                            <div className="user-content-wrapper-bank-desc">Cài đặt hạn mức chuyển tiền</div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* <div className="user-content-send"></div> */}
+
+                <footer>
+                    <a className="user-content-footer-link" href="/" alt="">
+                        Trang chủ
+                    </a>
+                    <div className="user-content-footer">|</div>
+                    <a
+                        className="user-content-footer-link"
+                        href="https://digibankm5.vietcombank.com.vn/get_file/ibomni/html/dieu-khoan-dk-kh-ca-nhan.html"
+                        alt=""
+                    >
+                        Điều khoản sử dụng dịch vụ
+                    </a>
+                    <div className="user-content-footer">|</div>
+                    <a
+                        className="user-content-footer-link"
+                        href="https://portal.vietcombank.com.vn/Personal/BP/Pages/chi-tiet-bieu-phi.aspx?ItemID=68&devicechannel=default"
+                        alt=""
+                    >
+                        Biểu phí dịch vụ
+                    </a>
+                    <div className="user-content-footer">|</div>
+                    <a
+                        className="user-content-footer-link"
+                        href="https://digibankm5.vietcombank.com.vn/get_file/ibomni/html/hdsd-ib/pages/vi/menu.html"
+                        alt=""
+                    >
+                        Hướng dẫn sử dụng dịch vụ
+                    </a>
+                    <div className="user-content-footer">|</div>
+                    <a
+                        className="user-content-footer-link"
+                        href="https://digibankm5.vietcombank.com.vn/get_file/ibomni/html/huong-dan-giao-dich-an-toan.html"
+                        alt=""
+                    >
+                        Hướng dẫn giao dịch an toàn
+                    </a>
+                </footer>
+            </div>
         </section>
-    )
-}
-//Làm tiếp giao diện người dùng này(truy cập lần cuối: 4:46 7/10/2022)    
+    );
+};
+//Làm tiếp giao diện người dùng này(truy cập lần cuối: 5h:19AM 14/7/2022)
 
 export default Profile;

@@ -16,14 +16,14 @@
     display: flex;
 }
 
-.home-footer a {
+.home-footer .footer-left-item {
     padding: 0 6px;
     color: hsla(0,0%,100%,.7);
     font-size: 14px;
     border-bottom: 1px solid transparent;
 }
 
-.home-footer a:hover {
+.home-footer .footer-left-item:hover {
     color: #72bf00;
     border-color: #72bf00; 
 }
