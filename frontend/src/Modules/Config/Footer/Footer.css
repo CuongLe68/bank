@@ -1,0 +1,21 @@
+/* Phần chân trang*/
+footer {
+    background-color: transparent;
+    border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+    height: 50px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(20, 34, 32, 0.7);
+}
+
+.user-content-footer {
+    color: hsla(0, 0%, 100%, 0.6);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.user-content-footer-link {
+    color: hsla(0, 0%, 100%, 0.6);
+}
