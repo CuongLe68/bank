@@ -1,3 +1,163 @@
 .banking-container {
-    font-size: 20px;
+    height: 100vh;
+    position: relative;
+    margin: 80px 0 0 396px;
+    padding: 30px 228px;
+    background-color: rgba(20, 34, 32, 0.6);
+}
+
+/* title */
+.banking-title {
+    padding-top: 30px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.banking-title h2 {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: #ffffffe6;
+}
+
+.banking-link {
+    padding-top: 10px;
+    font-size: 15px;
+    letter-spacing: -0.5px;
+    color: hsla(0, 0%, 100%, 0.7);
+}
+
+.banking-link a {
+    font-weight: 500;
+    color: hsla(0, 0%, 100%, 0.7);
+}
+
+.banking-link a:hover {
+    border-bottom: 1px solid #72bf00;
+}
+
+.banking-title-current {
+    margin-left: 10px;
+    color: #72bf00;
+}
+
+.banking-title-current:hover {
+    border-bottom: 1px solid #72bf00;
+}
+
+/* confirm */
+.banking-confirm {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.banking-confirm::before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: #3b5958;
+    top: 15px;
+    padding-right: 10px;
+}
+
+.banking-confirm-item {
+    z-index: 1;
+    width: 60px;
+    height: 60px;
+}
+
+.banking-confirm-item .active {
+    border-color: #72bf00;
+    background-color: #72bf00;
+}
+
+.banking-confirm-item-index {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    color: hsla(0, 0%, 100%, 0.7);
+    background-color: #234545;
+    border-radius: 50%;
+    border: 2px solid #92a3a2;
+    padding-top: 2px;
+}
+
+.banking-confirm-item-desc {
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.5px;
+    color: hsla(0, 0%, 100%, 0.7);
+    padding-top: 10px;
+    width: 62px;
+}
+
+/* mô tả desc*/
+.banking-desc {
+    text-align: right;
+    color: #72bf00;
+    font-size: 15px;
+    padding: 10px 0;
+    letter-spacing: -0.5px;
+}
+
+/* phần banking-header*/
+.banking-header {
+    padding: 10px 30px;
+    margin: 10px 0;
+    background-color: rgba(44, 64, 68, 0.7);
+    border-radius: 10px;
+}
+
+.banking-header-number {
+    margin: 20px 0;
+    display: flex;
+}
+
+.banking-header-number-title {
+    flex: 1;
+    text-align: left;
+    color: #ffffffb3;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-header-number-section {
+    width: 420px;
+    height: 44px;
+    font-size: 16px;
+    color: #72bf00;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    padding: 0 10px;
+}
+
+.banking-header-number-section option {
+    font-size: 16px;
+    color: #121f3e;
+}
+
+.banking-header-money {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.banking-header-money-title {
+    flex: 1;
+    text-align: left;
+    color: #ffffffb3;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-header-money-curent {
+    width: 420px;
+    text-align: left;
+    color: hsla(0, 0%, 100%, 0.9);
+    font-size: 15px;
 }
