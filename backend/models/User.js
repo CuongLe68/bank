@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema(
         currentmoney: {
             type: Number,
         },
+        numberCard: {
+            type: Number,
+        },
         admin: {
             type: Boolean, //kiểm tra user đăng nhập có phải admin không
             default: false, //mặc định là false

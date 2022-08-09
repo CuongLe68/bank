@@ -12,6 +12,12 @@ const authController = {
             // const salt = await bcrypt.genSalt(10);
             // const hashed = await bcrypt.hash(req.body.password, salt)
 
+            //tạo số thẻ
+            numberCard = await Math.floor(Math.random() * 10000000000);
+            if (numberCard < 1000000000) {
+                numberCard = numberCard * 10;
+            }
+
             //Tạo user mới
             const newUser = await new User({
                 username: req.body.username,
@@ -19,6 +25,7 @@ const authController = {
                 name: req.body.name,
                 password: req.body.password,
                 currentmoney: 0,
+                numberCard: numberCard,
                 // password: hashed //sử dụng khi hash password
             });
             //Lưu user vào DB
@@ -56,9 +63,10 @@ const authController = {
 
     //ĐĂNG NHẬP
     loginUser: async (req, res) => {
+        //req chính là user từ frontend gửi lên
         try {
             //kiểm tra tài khoản
-            const user = await User.findOne({ username: req.body.username });
+            const user = await User.findOne({ username: req.body.username }); //lấy username từ frontend ra và kiếm trong database User có thằng username trùng không
 
             if (!user) {
                 return res.status(404).json('Tên đăng nhập không chính xác!');
@@ -69,7 +77,7 @@ const authController = {
             //     req.body.password, //pass nhập vào
             //     user.password //pass ở database
             // );
-            const validPassword = await (req.body.password === user.password);
+            const validPassword = await (req.body.password === user.password); //so sánh pass nhập vào === pass từ databse không
 
             if (!validPassword) {
                 return res.status(404).json('Mật khẩu không chính xác!');
@@ -86,15 +94,15 @@ const authController = {
                 //Lưu refreshToken vào cookie
                 res.cookie('refreshToken', refreshToken, {
                     httpOnly: true, //làm cho tình duyệt phải kết nối bảo mật (secure/encrypted),
-                    secure: false, //deploy thì sữa thành true
+                    secure: false, //deploy thì sữa thành true, xác thực danh tính người sử dụng API đó
                     path: '/',
                     sameSite: 'strict', //để yêu cầu ghi rõ nhãn cookie của trang khác để có thể share cookie với trang này(tránh giả mạo cookie của người khác)
                 });
 
                 //set thông tin trả về khi đăng nhập thành công
-                const { password, ...others } = user._doc; // trả về tất cả thông tin trừ password
+                const { password, ...others } = user._doc; // trả về tất cả thông tin trừ password (._docx là toàn bộ thông tin từ id,username,....)
 
-                res.status(200).json({ ...others, accessToken }); //nếu muốn trả về toàn bộ thì thay other thành user
+                res.status(200).json({ ...others, accessToken }); //nếu muốn trả về toàn bộ thì thay other thành user, ở đây là trả về tất cả + accessToken
             }
         } catch (error) {
             res.status(500).json('có lỗi đăng nhập');

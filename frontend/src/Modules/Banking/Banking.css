@@ -1,5 +1,7 @@
 .banking-container {
-    height: 100vh;
+    width: 100%;
+    max-width: 1136px;
+    height: 100%;
     position: relative;
     margin: 80px 0 0 396px;
     padding: 30px 228px;
@@ -10,7 +12,7 @@
 .err {
     z-index: 999;
     position: absolute;
-    height: 100%; /* chưa sữa lại 100% chiều cao*/
+    height: 138vh; /* chưa sữa lại 100% chiều cao*/
     width: 100%;
     background: rgba(0, 0, 0, 0.32);
     display: flex;
@@ -23,6 +25,7 @@
     height: 220px;
     background-color: #fff;
     border-radius: 10px;
+    margin-bottom: 250px;
 }
 
 .err-box-header {
@@ -282,4 +285,160 @@
     right: 6px;
     bottom: 10px;
     cursor: pointer;
+}
+
+/* Content */
+.banking-content {
+    position: relative;
+    background-color: rgba(44, 64, 68, 0.7);
+    border-radius: 10px;
+    padding: 10px 30px;
+    margin-bottom: 10px;
+}
+
+.banking-content-money {
+    display: flex;
+    padding-top: 20px;
+}
+
+.banking-content-money-title {
+    width: 200px;
+    text-align: left;
+    font-size: 15px;
+    color: hsla(0, 0%, 100%, 0.7);
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.25px;
+}
+
+.banking-content-money-number {
+    flex: 1;
+    height: 44px;
+    border-radius: 6px;
+    font-size: 15px;
+    padding: 0 10px;
+}
+
+.banking-content-money-vnd {
+    position: absolute;
+    right: 38px;
+    top: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.25px;
+}
+
+.banking-content-desc {
+    letter-spacing: -0.25px;
+    font-size: 15px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 4px 0 10px;
+}
+
+.banking-content-desc a {
+    color: #72bf00;
+}
+
+.banking-content-check {
+    display: flex;
+    padding: 10px 0;
+}
+
+.banking-content-check-title {
+    width: 200px;
+    font-size: 15px;
+    letter-spacing: -0.25px;
+    color: hsla(0, 0%, 100%, 0.7);
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.banking-content-check-box {
+    display: flex;
+}
+
+/*Tất cả thẻ input có type là radio*/
+input[type='radio']:after {
+    width: 16px;
+    height: 16px;
+    border-radius: 15px;
+    top: -2px;
+    left: 0;
+    position: relative;
+    background-color: rgba(44, 64, 68, 1);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+    cursor: pointer;
+}
+
+input[type='radio']:checked:after {
+    width: 16px;
+    height: 16px;
+    border-radius: 15px;
+    top: -2px;
+    left: 0px;
+    position: relative;
+    background-color: #72bf00;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.banking-content-check-box-col1 {
+    padding-right: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.banking-content-check-box-col2 {
+    display: flex;
+    align-items: center;
+}
+
+.banking-span-check {
+    padding-left: 10px;
+    color: hsla(0, 0%, 100%, 0.9);
+    font-size: 15px;
+}
+
+.banking-content-value {
+    display: flex;
+    padding: 20px 0;
+}
+
+.banking-content-value-title {
+    width: 200px;
+    font-size: 15px;
+    letter-spacing: -0.25px;
+    color: hsla(0, 0%, 100%, 0.7);
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.banking-content-value-desc {
+    flex: 1;
+    height: 44px;
+    border-radius: 6px;
+    font-size: 15px;
+    padding: 0 10px;
+    font-weight: 500;
+}
+
+/* Chuyển tiền*/
+.banking-btn {
+    width: 200px;
+    height: 44px;
+    border-radius: 10px;
+    color: hsla(0, 0%, 100%, 0.9);
+    font-weight: 600;
+    background: linear-gradient(120deg, #5fb621, #007c30);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }

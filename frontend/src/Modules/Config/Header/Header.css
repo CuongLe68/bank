@@ -9,6 +9,7 @@
 /* phần navbar*/
 .user-navbar {
     height: 100%;
+    max-height: 1127px;
     padding: 20px 0;
 }
 .user-navbar-top-item {
@@ -46,6 +47,7 @@
     position: fixed;
     width: 330px;
     height: 100%;
+    max-height: 1127px;
     background-color: #041b20;
     margin-left: 66px;
     margin-right: auto;

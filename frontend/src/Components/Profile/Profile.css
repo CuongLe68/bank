@@ -4,11 +4,13 @@
     height: 100%;
     background-image: url('https://vcbdigibank.vietcombank.com.vn/assets/images/web/img/bg/bg-default.jpg');
     object-fit: cover;
+    background-repeat: repeat-y;
 }
 
 /* Phần Header-navbar */
 .user-header {
     position: relative;
+    max-width: 1136px;
     margin: 80px 0 0 396px;
     padding: 25px 60px 0;
     background-color: rgba(20, 34, 32, 0.4);

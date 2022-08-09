@@ -1,13 +1,26 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Footer from '../Config/Footer/Footer';
 import Header from '../Config/Header/Header';
 import './Banking.css';
 
+//socket.io
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:5000'); //kết nối tới server socket
+
 function Banking() {
+    const user = useSelector((state) => state.auth.login.currentUser); //import user
+    const [infoSend, setInfoSend] = useState(user.numberCard); // thông tin người gửi
+    const [infoRecive, setInfoRecive] = useState(null); //thông tin người nhận
+    const [money, setMoney] = useState(null); //số tiền muốn chuyển
+    const [fee, setFee] = useState('Người chuyển trả'); //phí chuyển
+    const [valueMsg, setvalueMsg] = useState(`${user.name} chuyen khoan`); //Nội dung
+
     // eslint-disable-next-line
     const deleteErr = () => {
         alert('Đóng');
-        document.getElementById('err').classList.remove('err'); //không remove class được dkm cay vl
+        document.getElementById('err').classList.remove('err'); //không remove class được dkm cay vl :((
     };
 
     const handleDemo = () => {
@@ -31,6 +44,50 @@ function Banking() {
             </div>
         `;
     };
+
+    //check người trả
+    const isChecked = (index) => {
+        if (index === 1) {
+            setFee('Người chuyển trả');
+            document.querySelector('.banking-content-check-box-col2-check').checked = false;
+        } else {
+            setFee('Người nhận trả');
+            document.querySelector('.banking-content-check-box-col1-check').checked = false;
+        }
+    };
+
+    // eslint-disable-next-line
+    const formSubmit = {
+        name: user.name,
+        infoSend: infoSend,
+        infoRecive: infoRecive,
+        money: Number(money),
+        fee: fee,
+        message: valueMsg,
+    };
+
+    useEffect(() => {
+        socket.on('server-send-money-success', (msg) => {
+            alert(msg);
+        });
+        socket.on('server-send-money-false', (msg) => {
+            alert(msg);
+        });
+    }, []);
+
+    const handleSubmit = () => {
+        if (infoRecive === null) {
+            alert('Lỗi: vui lòng nhập thông tin người hưởng!');
+        } else {
+            if (money === null || money <= 0) {
+                alert('Lỗi: Vui lòng nhập số tiền muốn gửi!');
+            }
+        }
+        if (infoRecive !== null && money !== null) {
+            socket.emit('client-send-money', formSubmit);
+        }
+    };
+
     return (
         <>
             <div id="err"></div>
@@ -79,14 +136,17 @@ function Banking() {
                     <div className="banking-header">
                         <div className="banking-header-number">
                             <div className="banking-header-number-title">Tài khoản nguồn</div>
-                            <select className="banking-header-number-section">
-                                <option>0123456789 - VND</option>
-                                <option>0909900009 - VND</option>
+                            <select
+                                className="banking-header-number-section"
+                                onChange={(e) => setInfoSend(e.target.value)}
+                            >
+                                <option value={user.numberCard}>{user.numberCard} - VND</option>
+                                <option value="0909900009">0909900009 - VND</option>
                             </select>
                         </div>
                         <div className="banking-header-money">
                             <div className="banking-header-money-title">Số dư khả dụng</div>
-                            <div className="banking-header-money-curent">1,504,320 VND</div>
+                            <div className="banking-header-money-curent">{user.currentmoney} VND</div>
                         </div>
                     </div>
 
@@ -117,6 +177,7 @@ function Banking() {
                                 className="banking-info-number-input"
                                 type="text"
                                 placeholder="Nhập/ chọn tài khoản hưởng thụ VND"
+                                onChange={(e) => setInfoRecive(e.target.value)}
                             />
                             <img
                                 className="banking-info-number-img"
@@ -127,9 +188,60 @@ function Banking() {
                     </div>
 
                     {/* content */}
-                    <div className="banking-content"></div>
-                    <div className="banking-footer"></div>
-                    {/* <button className="banking-btn">Xác nhận</button> */}
+                    <div className="banking-content">
+                        <div className="banking-content-money">
+                            <div className="banking-content-money-title">Số tiền</div>
+                            <input
+                                className="banking-content-money-number"
+                                type="number"
+                                placeholder="Nhập số tiền"
+                                onChange={(e) => setMoney(e.target.value)}
+                            />
+                            <div className="banking-content-money-vnd">VND</div>
+                        </div>
+                        <div className="banking-content-desc">
+                            <a href="https://digibankm5.vietcombank.com.vn/get_file/ibomni/html/hanmucgiaodich-kh-canhan.html">
+                                Hạn mức
+                            </a>
+                        </div>
+                        <div className="banking-content-check">
+                            <div className="banking-content-check-title">Phí giao dịch</div>
+                            <div className="banking-content-check-box">
+                                <div className="banking-content-check-box-col1">
+                                    <input
+                                        className="banking-content-check-box-col1-check"
+                                        type="radio"
+                                        defaultChecked
+                                        onClick={() => isChecked(1)}
+                                    />
+                                    <span className="banking-span-check">Người chuyển trả</span>
+                                </div>
+                                <div className="banking-content-check-box-col2">
+                                    <input
+                                        className="banking-content-check-box-col2-check"
+                                        type="radio"
+                                        onClick={isChecked}
+                                    />
+                                    <span className="banking-span-check">Người nhận trả</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="banking-content-value">
+                            <div className="banking-content-value-title">Nội dung</div>
+                            <input
+                                className="banking-content-value-desc"
+                                type="text"
+                                value={valueMsg}
+                                onChange={(e) => setvalueMsg(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    {/* chỉnh thêm phần checked ở trên nữa là làm phần banking-footer */}
+                    {/* <div className="banking-footer"></div> */}
+                    <button className="banking-btn" onClick={handleSubmit}>
+                        Tiếp tục
+                    </button>
                 </div>
 
                 <Footer />

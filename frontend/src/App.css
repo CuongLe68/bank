@@ -6,6 +6,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    max-width: 1532px;
 }
 .App {
     display: flex;
@@ -18,6 +19,7 @@ body,
     background-image: url('./img/background.jpg');
     background-repeat: no-repeat;
     object-fit: cover;
+    background-size: 1532px;
     width: 100%;
     height: 100%;
     margin: 0;

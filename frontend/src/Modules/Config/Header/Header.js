@@ -5,8 +5,12 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createAxios } from '../../../createInstance';
 import { logOutSuccess } from '../../../redux/authSlice';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
+//socket.io
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:5000'); //kết nối tới server socket
 
 function Header() {
     const [show, setShow] = useState(false);
@@ -32,6 +36,14 @@ function Header() {
             document.querySelector('.info-card-wrapper-footer-money').innerHTML = `${user.currentmoney} VND`;
         }
     };
+
+    //socket.io
+    useEffect(() => {
+        socket.on(`${String(user.numberCard)}`, (data) => {
+            alert(`${data.name} đã chuyển cho bạn ${data.money} VND với nội dung: ${data.message}`);
+        });
+        // eslint-disable-next-line
+    }, [socket]);
 
     return (
         <div>
@@ -127,7 +139,7 @@ function Header() {
                     <div className="info-card-wrapper">
                         <div className="info-card-wrapper-title">Tài khoản thanh toán</div>
                         <div className="info-card-wrapper-detail">
-                            <div className="info-card-wrapper-number">0123456789</div>
+                            <div className="info-card-wrapper-number">{user.numberCard}</div>
                             <Link to="/trangchu" className="user-info-icon-right">
                                 <img
                                     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0LjQxNCcgaGVpZ2h0PSc2LjgyOCc+PHBhdGggZGF0YS1uYW1lPSdQYXRoIDU2MycgZD0nTTEuNDEgMS40MTRsMiAyLTIgMicgZmlsbD0nbm9uZScgc3Ryb2tlPScjNzJiZjAwJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIHN0cm9rZS13aWR0aD0nMicvPjwvc3ZnPg=="

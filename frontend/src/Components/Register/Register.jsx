@@ -27,7 +27,13 @@ const Register = () => {
             password: password,
         };
 
-        registerUser(newUser, dispatch, navigate);
+        if (password === '') {
+            alert('Không được để trống mật khẩu');
+        } else if (password.length < 8) {
+            alert('Mật khẩu ít nhất 8 kí tự');
+        } else {
+            registerUser(newUser, dispatch, navigate);
+        }
     };
 
     //Xử lý hiển thị hoặc tắt show password (toggle password)

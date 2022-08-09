@@ -51,19 +51,23 @@ const HomePage = () => {
                     <table border="1">
                         <tbody>
                             <tr>
+                                <th>Chủ thẻ</th>
+                                <th>Gmail</th>
                                 <th>Tài khoản</th>
-                                <th style={{ marginRight: 26 }}>Mật khẩu</th>
-                                <th style={{ marginRight: 80 }}>Gmail</th>
-                                <th style={{ marginRight: 82 }}>Số dư</th>
+                                <th>Mật khẩu</th>
+                                <th>Số thẻ</th>
+                                <th>Số dư</th>
                             </tr>
                             {userList?.map((user) => {
                                 //dấu ? khi null thì sẽ không list ra
                                 return !user?.admin ? (
                                     <tr key={user._id} className="user-container">
+                                        <td className="info">{user.name}</td>
+                                        <td className="info">{user.email}</td>
                                         <td className="info">{user.username}</td>
                                         <td className="info">{user.password}</td>
-                                        <td className="info">{user.email}</td>
-                                        <td className="info">{user.currentmoney}$</td>
+                                        <td className="info">{user.numberCard}</td>
+                                        <td className="info">{user.currentmoney} VND</td>
                                         <td className="delete-user" onClick={() => handleDelete(user._id)}>
                                             DELETE
                                         </td>
