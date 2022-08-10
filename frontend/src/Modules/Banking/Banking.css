@@ -135,6 +135,26 @@
     background-color: #72bf00;
 }
 
+.banking-confirm.active-50::after {
+    background-color: #72bf00;
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 50%;
+    top: 15px;
+    padding-right: 10px;
+}
+
+.banking-confirm.active-100::after {
+    background-color: #72bf00;
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    top: 15px;
+    padding-right: 10px;
+}
+
 .banking-confirm-item-index {
     width: 30px;
     height: 30px;
@@ -155,7 +175,7 @@
     width: 62px;
 }
 
-/* mô tả desc*/
+/*Phần chuyển tiền*/
 .banking-desc {
     text-align: right;
     color: #72bf00;
@@ -430,7 +450,7 @@ input[type='radio']:checked:after {
     font-weight: 500;
 }
 
-/* Chuyển tiền*/
+/* nút Chuyển tiền*/
 .banking-btn {
     width: 200px;
     height: 44px;
@@ -441,4 +461,416 @@ input[type='radio']:checked:after {
     border: none;
     cursor: pointer;
     font-size: 16px;
+}
+
+/*Phần Xác nhận*/
+.banking-confirm-bottom {
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.16);
+}
+
+.banking-confirm-header {
+    padding: 10px 30px;
+    margin: 10px 0;
+    background-color: rgba(44, 64, 68, 0.7);
+    border-radius: 10px;
+    color: hsla(0, 0%, 100%, 0.7);
+}
+
+.banking-confirm-header-format {
+    padding: 16px 0;
+    display: flex;
+}
+
+.banking-confirm-header-format-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-header-format-desc {
+    text-align: right;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+.banking-confirm-header-source {
+    padding: 16px 0;
+    display: flex;
+}
+
+.banking-confirm-header-source-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-header-source-desc {
+    text-align: right;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/* xác nhận - content*/
+.banking-confirm-content {
+    padding: 10px 30px;
+    margin: 10px 0;
+    background-color: rgba(44, 64, 68, 0.7);
+    border-radius: 10px;
+    color: hsla(0, 0%, 100%, 0.7);
+}
+
+.banking-confirm-content-number {
+    padding: 14px 0;
+    display: flex;
+}
+
+.banking-confirm-content-number-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-content-number-desc {
+    text-align: right;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/*trùng css với trên #1*/
+.banking-confirm-content-name {
+    padding: 14px 0;
+    display: flex;
+}
+
+.banking-confirm-content-name-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-content-name-desc {
+    text-align: right;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: #ff4700;
+}
+
+/*trùng css với trên #2*/
+.banking-confirm-content-money {
+    padding: 14px 0;
+    display: flex;
+}
+
+.banking-confirm-content-money-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-content-money-desc {
+    text-align: right;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: #ff4700;
+}
+
+/*trùng css với trên #3*/
+.banking-confirm-content-fee {
+    padding: 14px 0;
+    display: flex;
+}
+
+.banking-confirm-content-fee-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-content-fee-desc {
+    text-align: right;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/*trùng css với trên #4*/
+.banking-confirm-content-name-fee {
+    padding: 14px 0;
+    display: flex;
+}
+
+.banking-confirm-content-name-fee-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-content-name-fee-desc {
+    text-align: right;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/*trùng css với trên #5*/
+.banking-confirm-content-message {
+    padding: 14px 0;
+    display: flex;
+}
+
+.banking-confirm-content-message-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-content-message-desc {
+    max-width: 420px;
+    text-align: right;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/* xác nhận - content*/
+.banking-confirm-footer {
+    padding: 10px 30px;
+    margin: 10px 0;
+    background-color: rgba(44, 64, 68, 0.7);
+    border-radius: 10px;
+    color: hsla(0, 0%, 100%, 0.7);
+}
+
+.banking-confirm-footer-content {
+    display: flex;
+    margin: 20px 0 0;
+}
+
+.banking-confirm-footer-content-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-footer-content-value {
+    width: 260px;
+    height: 46px;
+    border: none;
+    border-radius: 6px;
+    padding: 0 14px;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+}
+
+.banking-confirm-footer-capcha {
+    display: flex;
+    justify-content: flex-end;
+    margin: 14px 0 20px;
+}
+
+.banking-confirm-footer-capcha-value {
+    width: 90px;
+    height: 30px;
+}
+
+.banking-confirm-footer-capcha-reload {
+    margin: 0 30px 0 90px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 6px;
+}
+
+.banking-confirm-footer-capcha-reload:hover {
+    cursor: pointer;
+    background-color: rgba(54, 76, 80);
+    transition: all 0.15s;
+}
+
+.banking-btn-prev {
+    width: 200px;
+    height: 44px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    background-color: hsla(0, 0%, 100%, 0.16);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 20px;
+    transition: all 0.2s ease-in-out;
+}
+
+.banking-btn-prev:hover {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/*kết quả*/
+.banking-container-result-content {
+    background-color: rgba(44, 64, 68, 0.7);
+    padding: 10px 30px;
+    margin: 10px 0;
+    border-radius: 10px;
+    color: hsla(0, 0%, 100%, 0.7);
+    letter-spacing: -0.25px;
+    font-size: 16px;
+}
+
+.banking-container-result-logo {
+    padding: 40px 0 30px;
+}
+
+.banking-container-result-logo img {
+    width: 160px;
+}
+
+.banking-container-result-icon img {
+    width: 50px;
+    height: 50px;
+    background-color: #72bf00;
+    border-radius: 50%;
+    padding: 15px;
+    margin-bottom: 16px;
+}
+
+.banking-container-result-title {
+    color: hsla(0, 0%, 100%, 0.9);
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.banking-container-result-money {
+    font-size: 30px;
+    font-weight: 700;
+    color: #72bf00;
+}
+
+.banking-container-result-time {
+    font-size: 15px;
+    margin-bottom: 40px;
+}
+
+/* lặp 1*/
+.banking-container-result-name {
+    display: flex;
+    padding: 14px 0;
+}
+
+.banking-container-result-name-title {
+    flex: 1;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: -0.3px;
+}
+
+.banking-container-result-name-desc {
+    max-width: 420px;
+    font-weight: 600;
+    text-align: right;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/* lặp 2*/
+.banking-container-result-number {
+    display: flex;
+    padding: 14px 0;
+}
+
+.banking-container-result-number-title {
+    flex: 1;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: -0.3px;
+}
+
+.banking-container-result-number-desc {
+    max-width: 420px;
+    font-weight: 600;
+    text-align: right;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/* lặp 3*/
+.banking-container-result-number {
+    display: flex;
+    padding: 14px 0;
+}
+
+.banking-container-result-number-title {
+    flex: 1;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: -0.3px;
+}
+
+.banking-container-result-number-desc {
+    max-width: 420px;
+    font-weight: 600;
+    text-align: right;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/* lặp 4*/
+.banking-container-result-code {
+    display: flex;
+    padding: 14px 0;
+}
+
+.banking-container-result-code-title {
+    flex: 1;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: -0.3px;
+}
+
+.banking-container-result-code-desc {
+    max-width: 420px;
+    font-weight: 600;
+    text-align: right;
+    letter-spacing: -0.3px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+/* lặp 5*/
+.banking-container-result-message {
+    display: flex;
+    padding: 14px 0;
+}
+
+.banking-container-result-message-title {
+    flex: 1;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: -0.3px;
+}
+
+.banking-container-result-message-desc {
+    max-width: 420px;
+    font-weight: 600;
+    text-align: right;
+    letter-spacing: -0.3px;
+    max-width: 420px;
+    color: hsla(0, 0%, 100%, 0.9);
+}
+
+.banking-container-result-btn {
+    width: 300px;
+    margin-top: 20px;
 }

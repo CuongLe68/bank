@@ -37,7 +37,7 @@ function Header() {
         }
     };
 
-    //socket.io
+    //Xử lý thông báo khi có người chuyển tiền
     useEffect(() => {
         socket.on(`${String(user.numberCard)}`, (data) => {
             alert(`${data.name} đã chuyển cho bạn ${data.money} VND với nội dung: ${data.message}`);

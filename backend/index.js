@@ -51,49 +51,63 @@ users.then(function (result) {
 io.on('connection', (socket) => {
     console.log(socket.id + ' đã kết nối');
 
-    socket.on('client-send-money', (data) => {
+    //lắng nghe sự kiện kiểm tra thông tin giao dịch trước khi chuyển
+    socket.on('client-send-check', (data) => {
         console.log(data);
         let x = false;
 
         userArr.map((user) => {
             if (user.numberCard === data.infoSend) {
+                //kiểm tra số dư của người chuyển có lớn hơn số tiền muốn chuyển không
                 if (user.currentmoney < data.money) {
+                    //thông báo lỗi số dư không đủ
                     const msg = 'Lỗi: Số dư không đủ';
-                    console.log('số dư không đủ');
-                    socket.emit('server-send-money-false', msg);
+                    socket.emit('server-send-check-false', msg);
                 } else {
                     userArr.map((user) => {
+                        //kiểm tra có số thẻ người hưởng không và số thẻ người hưởng phải khác số thẻ người chuyển
                         if (user.numberCard === Number(data.infoRecive) && data.infoSend !== Number(data.infoRecive)) {
-                            //cộng tiền cho người nhận
-                            user.currentmoney += data.money;
-                            user.save();
-
-                            //trừ tiền của người gửi
-                            userArr.map((user) => {
-                                if (user.numberCard === data.infoSend) {
-                                    user.currentmoney -= data.money;
-                                    user.save();
-                                }
-                            });
-
-                            //Gửi thông báo cho người được nhận tiền
-                            io.sockets.emit(`${data.infoRecive}`, data);
-
                             //Gửi thông báo chuyển tiền thành công
-                            const msg = 'Chuyển tiền thành công!';
-                            socket.emit('server-send-money-success', msg);
+                            socket.emit('server-send-check-success', { ...data, nameRecive: user.name });
 
+                            //xác nhận có số thẻ của người hưởng
                             x = true;
                         }
                     });
 
+                    //thông báo lỗi nếu không tìm được số thẻ của người hưởng
                     if (!x) {
                         const msg = 'Lỗi: Không tìm thấy số thẻ người hưởng';
-                        socket.emit('server-send-money-false', msg);
+                        socket.emit('server-send-check-false', msg);
                     }
                 }
             }
         });
+    });
+
+    //lắng nghe sự kiện có người chuyển tiền
+    socket.on('client-send-money', (data) => {
+        let time = Date();
+        userArr.map((user) => {
+            if (user.numberCard === Number(data.infoRecive)) {
+                //cộng tiền cho người hưởng
+                user.currentmoney += data.money;
+                user.save();
+
+                //trừ tiền của người gửi
+                userArr.map((user) => {
+                    if (user.numberCard === data.infoSend) {
+                        user.currentmoney -= data.money;
+                        user.save();
+                    }
+                });
+            }
+        });
+        //Gửi thông báo cho người được người hưởng
+        io.sockets.emit(`${data.infoRecive}`, data);
+
+        //Gửi thông báo chuyển tiền thành công cho người gửi
+        socket.emit('server-send-money-success', data);
     });
 
     socket.on('disconnect', () => {
