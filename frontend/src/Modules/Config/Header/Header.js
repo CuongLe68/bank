@@ -117,7 +117,7 @@ function Header() {
                     <div className="user-dec">
                         Lần đăng nhập gần nhất
                         <br />
-                        2022-07-15 1:20:21
+                        {user.lastTime}
                     </div>
                 </div>
                 <div className="user-info-card">

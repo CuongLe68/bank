@@ -66,7 +66,7 @@ function Banking() {
         minute = `0${minute}`;
     }
     let date = today.getDate(); //lấy ngày
-    let month = today.getMonth(); //lấy tháng
+    let month = today.getMonth() + 1; //lấy tháng
     let year = today.getFullYear(); //lấy năm
     let day; //lấy thứ
     switch (today.getDay()) {

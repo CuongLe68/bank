@@ -43,7 +43,7 @@ const Login = () => {
     };
 
     return (
-        <>
+        <div className="login-background">
             <section className="login-container">
                 <img
                     src="https://vcbdigibank.vietcombank.com.vn/assets/images/logo-white.svg"
@@ -131,7 +131,7 @@ const Login = () => {
                 </div>
             </section>
             <Footer />
-        </>
+        </div>
     );
 };
 

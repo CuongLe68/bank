@@ -1,12 +1,97 @@
 @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
 
+/* thông báo chỉnh sửa*/
+.edit {
+    z-index: 999;
+    position: absolute;
+    height: 100vh; /* chưa sữa lại 100% chiều cao*/
+    width: 100%;
+    background: rgba(0, 0, 0, 0.32);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-box {
+    width: 400px;
+    height: 480px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+.edit-box-header-box {
+    padding: 20px;
+}
+
+.edit-box-header-box-title {
+    font-family: 'Edu VIC WA NT Beginner', cursive;
+    font-size: 48px;
+    font-weight: 700;
+    color: #4e65ff;
+}
+
+.edit-box-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.edit-box-header-title {
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    width: 96px;
+    text-align: left;
+}
+
+.edit-box-header-input {
+    flex: 1;
+    border-radius: 6px;
+    height: 36px;
+    font-size: 15px;
+    font-weight: 50;
+    padding: 0 10px;
+    color: #333;
+    border: 2px solid #84dbe8;
+}
+
+.edit-box-bottom {
+    width: 100%;
+    margin-left: 14px;
+}
+
+.edit-box-btn {
+    width: 100px;
+    height: 44px;
+    background: #4e65ff;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.edit-box-btn:hover {
+    background: linear-gradient(#4e65ff, #84dbe8);
+}
+
+/*Giao diện chính*/
+.home-background {
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(#fad0c4, #ffd1ff);
+}
+
 .home-container {
     font-family: 'Edu VIC WA NT Beginner', cursive;
     position: relative;
     width: 100%;
     height: 100vh;
-    padding-top: 70px;
-    background-image: linear-gradient(#fad0c4, #ffd1ff);
+    padding: 40px 0 0 90px;
 }
 
 .home-title {
@@ -40,27 +125,40 @@ tr {
 
 th {
     border: none;
-    width: 16%;
+    width: 14%;
     font-size: 20px;
 }
 
 td.info {
     font-size: 18px;
     font-weight: 600;
-    min-width: 230px;
-    max-width: 240px;
+    min-width: 200px;
+    max-width: 230px;
     padding: 10px;
-    width: 17%;
+    width: 16%;
 }
 
-td.delete-user {
+td.home-btn {
     cursor: pointer;
     font-size: 1rem;
     background: linear-gradient(#ff758c, #ff7eb3);
-    padding: 0.35rem;
+    min-width: 110px;
     border: 1px solid #333;
     color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.delete-user:hover {
+
+td.home-btn-edit {
+    background: #4e65ff;
+}
+
+.home-btn-edit:hover {
+    background: linear-gradient(#4e65ff, #92effd);
+}
+
+.home-btn-delete:hover {
     background: linear-gradient(#ff758c, #af4657);
 }

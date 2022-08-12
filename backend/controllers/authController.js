@@ -26,6 +26,7 @@ const authController = {
                 password: req.body.password,
                 currentmoney: 0,
                 numberCard: numberCard,
+                lastTime: 'Đăng nhập lần đầu',
                 // password: hashed //sử dụng khi hash password
             });
             //Lưu user vào DB
@@ -103,6 +104,34 @@ const authController = {
                 const { password, ...others } = user._doc; // trả về tất cả thông tin trừ password (._docx là toàn bộ thông tin từ id,username,....)
 
                 res.status(200).json({ ...others, accessToken }); //nếu muốn trả về toàn bộ thì thay other thành user, ở đây là trả về tất cả + accessToken
+
+                //cập nhật thời gian đăng nhập mới
+                let today = new Date();
+                let hours = today.getHours();
+                if (hours < 10) {
+                    hours = `0${hours}`;
+                }
+                let minute = today.getMinutes();
+                if (minute < 10) {
+                    minute = `0${minute}`;
+                }
+                let second = today.getSeconds();
+                if (second < 10) {
+                    second = `0${second}`;
+                }
+                let date = today.getDate();
+                if (date < 10) {
+                    date = `0${date}`;
+                }
+                let month = today.getMonth() + 1;
+                if (month < 10) {
+                    month = `0${month}`;
+                }
+                let year = today.getFullYear();
+
+                let currentTime = `${year}-${month}-${date} ${hours}:${minute}:${second}`;
+                user.lastTime = currentTime;
+                user.save();
             }
         } catch (error) {
             res.status(500).json('có lỗi đăng nhập');

@@ -1,5 +1,5 @@
 //Chứa tất cả các user render ra từ database
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
     name: 'user',
@@ -9,14 +9,14 @@ const userSlice = createSlice({
             isFetching: false,
             error: false,
         },
-        msg:"",
+        msg: '',
     },
     reducers: {
         //Lấy tất cả người dùng
         getUsersStart: (state) => {
             state.users.isFetching = true;
         },
-        getUsersSuccess: (state,action) => {
+        getUsersSuccess: (state, action) => {
             state.users.isFetching = false;
             state.users.allUsers = action.payload;
         },
@@ -26,10 +26,11 @@ const userSlice = createSlice({
         },
 
         //Xóa 1 người dùng
-        deleteUserStart: (state)=> {
+        deleteUserStart: (state) => {
             state.users.isFetching = true;
         },
-        deleteUserSuccess: (state, action) => { //Khi muốn trả cái gì đó về phí client thì dùng action
+        deleteUserSuccess: (state, action) => {
+            //Khi muốn trả cái gì đó về phí client thì dùng action
             state.users.isFetching = false;
             state.msg = action.payload; //trả dòng chữ về
         },
@@ -37,9 +38,23 @@ const userSlice = createSlice({
             state.users.isFetching = false;
             state.users.error = true;
             state.msg = action.payload;
-        }
-    }
-})
+        },
+
+        //Chỉnh sửa thông tin của 1 người dùng
+        updateUserStart: (state) => {
+            state.users.isFetching = true;
+        },
+        updateUserSuccess: (state, action) => {
+            state.users.isFetching = false;
+            state.users.error = false;
+        },
+        updateUserFalse: (state, action) => {
+            state.users.isFetching = false;
+            state.users.error = true;
+            state.msg = action.payload;
+        },
+    },
+});
 
 export const {
     getUsersStart,
@@ -49,6 +64,10 @@ export const {
     deleteUserStart,
     deleteUserSuccess,
     deleteUserFalse,
+
+    updateUserStart,
+    updateUserSuccess,
+    updateUserFalse,
 } = userSlice.actions;
 
 export default userSlice.reducer;

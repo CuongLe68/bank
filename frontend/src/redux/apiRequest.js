@@ -18,6 +18,9 @@ import {
     getUsersFalse,
     getUsersStart,
     getUsersSuccess,
+    updateUserFalse,
+    updateUserStart,
+    updateUserSuccess,
 } from './userSlice';
 
 //Xử lý đăng ký
@@ -88,5 +91,21 @@ export const deleteUser = async (accessToken, dispatch, id, axiosJWT) => {
         dispatch(deleteUserSuccess(res.data));
     } catch (error) {
         dispatch(deleteUserFalse(error.response.data)); //Lấy từ res.status(...(vd như 403)).json('lỗi gì đo')
+    }
+};
+
+//Xử lý chỉnh sửa người dùng
+export const updateUser = async (accessToken, dispatch, navigate, id, axiosJWT, dataUpdate) => {
+    dispatch(updateUserStart());
+    try {
+        await axiosJWT.put('/v1/user/' + id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+            body: dataUpdate,
+        });
+        dispatch(updateUserSuccess());
+    } catch (error) {
+        dispatch(updateUserFalse(error.response.data));
     }
 };

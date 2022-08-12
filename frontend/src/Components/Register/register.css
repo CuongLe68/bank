@@ -1,3 +1,10 @@
+.register-background {
+    width: 100%;
+    background-image: url('../../img/background.jpg');
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
 .logo-white {
     position: absolute;
     left: 38px;
@@ -6,6 +13,7 @@
 }
 
 .register-container {
+    display: inline-block;
     width: 420px;
     height: 780px;
     background-color: rgb(221, 219, 209, 0.96);

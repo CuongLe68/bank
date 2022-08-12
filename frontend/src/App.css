@@ -16,10 +16,6 @@
 }
 body,
 .App {
-    background-image: url('./img/background.jpg');
-    background-repeat: no-repeat;
-    object-fit: cover;
-    background-size: 1532px;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -28,7 +24,6 @@ body,
     line-height: 1.5;
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
-    background-color: #ffffff;
 }
 
 /* scroll bar */

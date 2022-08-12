@@ -738,13 +738,20 @@ input[type='radio']:checked:after {
     width: 160px;
 }
 
-.banking-container-result-icon img {
-    width: 50px;
-    height: 50px;
+.banking-container-result-icon {
+    width: 46px;
+    height: 46px;
     background-color: #72bf00;
     border-radius: 50%;
     padding: 15px;
-    margin-bottom: 16px;
+    margin: 0 auto 16px;
+    position: relative;
+}
+
+.banking-container-result-icon img {
+    position: absolute;
+    right: 10px;
+    color: #fff;
 }
 
 .banking-container-result-title {

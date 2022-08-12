@@ -1,12 +1,14 @@
 .navbar-container {
     z-index: 1;
-    position: fixed;
-    width: 100%;
+    position: absolute;
+    height: 100%;
+    width: 70px;
     display: flex;
     padding: 1rem 1.5rem;
     justify-content: flex-end;
     background-color: rgba(0, 0, 0, 0.05);
     align-items: center;
+    flex-direction: column;
 }
 .navbar-container > * {
     /* Tất cả thẻ là con của thẻ navbar-container*/

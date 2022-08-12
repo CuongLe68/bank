@@ -58,7 +58,7 @@ const Register = () => {
         }
     };
 
-    //
+    //kiểm tra mật khẩu có khớp nhau không
     const handeleCheckpass = (pass) => {
         if (pass !== password) {
             alert('Mật Khẩu không khớp');
@@ -66,7 +66,7 @@ const Register = () => {
     };
 
     return (
-        <>
+        <div className="register-background">
             <img
                 src="https://vcbdigibank.vietcombank.com.vn/assets/images/logo-white.svg"
                 alt="logo"
@@ -157,7 +157,7 @@ const Register = () => {
                 </section>
             </div>
             <Footer />
-        </>
+        </div>
     );
 };
 
