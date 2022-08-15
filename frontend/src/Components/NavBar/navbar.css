@@ -1,36 +1,158 @@
 .navbar-container {
-    z-index: 1;
-    position: absolute;
+    z-index: 99;
+    position: fixed;
+    left: 0;
+    width: 300px;
     height: 100%;
-    width: 70px;
+    background-color: #4e65ff;
+    padding: 20px 0;
     display: flex;
-    padding: 1rem 1.5rem;
-    justify-content: flex-end;
-    background-color: rgba(0, 0, 0, 0.05);
-    align-items: center;
     flex-direction: column;
-}
-.navbar-container > * {
-    /* Tất cả thẻ là con của thẻ navbar-container*/
-    margin: 0 1.25rem;
-    text-decoration: none;
+    font-size: 16px;
     font-weight: 600;
-    color: rgb(0, 99, 230);
-}
-.navbar-user {
-    color: rgb(0, 154, 165);
-}
-.navbar-logout {
-    cursor: pointer;
-    border: none;
-    color: white;
-    padding: 0.35rem 0.7rem;
-    background: linear-gradient(#ff758c, #ff7eb3);
-    border-radius: 4px;
-    align-self: center;
-    font-size: 1rem;
+    letter-spacing: -0.25px;
+    text-align: center;
+    border-left: 10px solid #4e65ff;
+    transition: 0.3s;
+    overflow: hidden;
 }
 
-.navbar-logout:hover {
-    background: linear-gradient(#ff758c, #af4657);
+.navbar-container-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0 22px 0 16px;
+}
+
+.navbar-container-before:hover.navbar-container-before::before {
+    content: '';
+    width: 50px;
+    height: 50px;
+    top: -50px;
+    right: 0;
+    border-radius: 50%;
+    background: transparent;
+    position: absolute;
+    box-shadow: 35px 35px 0 10px white;
+    pointer-events: none;
+}
+.navbar-container-after:hover.navbar-container-after::after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    bottom: -50px;
+    right: 0;
+    border-radius: 50%;
+    background: transparent;
+    position: absolute;
+    box-shadow: 35px -35px 0 10px white;
+    pointer-events: none;
+}
+
+/*menu*/
+.navbar-container-menu {
+    position: relative;
+}
+
+.navbar-container-menu-icon {
+    position: absolute;
+    right: 18px;
+    top: -10px;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+/*logo*/
+.navbar-container-logo {
+    margin: 26px 0 36px 0;
+}
+
+.navbar-container-logo-icon {
+    font-family: 'Edu VIC WA NT Beginner', cursive;
+    width: 100%;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+}
+
+/*home*/
+.navbar-container-home {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    height: 60px;
+}
+
+.navbar-container-home:hover {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: white;
+    color: #4e65ff;
+}
+
+/*users*/
+.navbar-container-users {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    height: 60px;
+}
+
+.navbar-container-users:hover {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: white;
+    color: #4e65ff;
+}
+
+/*message*/
+.navbar-container-message {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    height: 60px;
+}
+
+.navbar-container-message:hover {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: white;
+    color: #4e65ff;
+}
+
+/*nofication*/
+.navbar-container-nofication {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    height: 60px;
+}
+
+.navbar-container-nofication:hover {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: white;
+    color: #4e65ff;
+}
+
+/*logout*/
+.navbar-container-logout {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    height: 60px;
+}
+
+.navbar-container-logout:hover {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: white;
+    color: #4e65ff;
 }

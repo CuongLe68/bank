@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { deleteUser, getAllUsers, updateUser } from '../../redux/apiRequest';
-import './home.css';
+import './adminUsers.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginSuccess } from '../../redux/authSlice';
 import { createAxios } from '../../createInstance';
 import Profile from '../Profile/Profile';
-import NavBar from '../NavBar/NavBar';
+import Navbar from '../Navbar/Navbar';
 
-const HomePage = () => {
+const AdminUsers = () => {
     const [reset, setReset] = useState(''); //render lại trang khi xóa
     const user = useSelector((state) => state.auth.login?.currentUser); //dấu ? để khi null là nó tự hiểu null và không báo lỗi nữa
     const dispatch = useDispatch();
@@ -108,6 +108,7 @@ const HomePage = () => {
 
     return user?.admin ? (
         <div className="home-background">
+            <Navbar />
             <div id="edit" className="edit">
                 <div className="edit-box">
                     <div className="edit-box-header-box">
@@ -177,7 +178,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <NavBar />
+
             <main className="home-container">
                 <div className="home-title">Danh sách người dùng</div>
                 <div className="home-role">{`Giao diện của${user?.admin ? `: Quản Trị Viên` : ' bạn'}`}</div>
@@ -185,23 +186,23 @@ const HomePage = () => {
                     <table border="1">
                         <tbody>
                             <tr>
-                                <th>Chủ thẻ</th>
-                                <th>Gmail</th>
-                                <th>Tài khoản</th>
-                                <th>Mật khẩu</th>
-                                <th>Số thẻ</th>
-                                <th>Số dư</th>
+                                <th className="home-userlist-title">Chủ thẻ</th>
+                                <th className="home-userlist-title">Gmail</th>
+                                <th className="home-userlist-title">Tài khoản</th>
+                                <th className="home-userlist-title">Mật khẩu</th>
+                                <th className="home-userlist-title">Số thẻ</th>
+                                <th className="home-userlist-title">Số dư</th>
                             </tr>
                             {userList?.map((user) => {
                                 //dấu ? khi null thì sẽ không list ra
                                 return !user?.admin ? (
                                     <tr className="user-container">
-                                        <td className="info">{user.name}</td>
-                                        <td className="info">{user.email}</td>
-                                        <td className="info">{user.username}</td>
-                                        <td className="info">{user.password}</td>
-                                        <td className="info">{user.numberCard}</td>
-                                        <td className="info">{user.currentmoney} VND</td>
+                                        <td className="user-container-info">{user.name}</td>
+                                        <td className="user-container-info">{user.email}</td>
+                                        <td className="user-container-info">{user.username}</td>
+                                        <td className="user-container-info">{user.password}</td>
+                                        <td className="user-container-info">{user.numberCard}</td>
+                                        <td className="user-container-info">{user.currentmoney} VND</td>
                                         <td className="home-btn home-btn-edit" onClick={() => handleStartEdit(user)}>
                                             CHỈNH SỬA
                                         </td>
@@ -224,4 +225,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default AdminUsers;
