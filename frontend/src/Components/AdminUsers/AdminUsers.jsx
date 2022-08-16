@@ -47,7 +47,7 @@ const AdminUsers = () => {
     //xủ lý xóa người dùng
     const handleDelete = async (id) => {
         await deleteUser(user?.accessToken, dispatch, id, axiosJWT);
-        setNotification(msg); //hiện thông báo xáo thành công
+        setNotification(`(${msg})`); //hiện thông báo xáo thành công
         setReset(id); //tải lại trang
     };
 
@@ -182,6 +182,8 @@ const AdminUsers = () => {
             <main className="home-container">
                 <div className="home-title">Danh sách người dùng</div>
                 <div className="home-role">{`Giao diện của${user?.admin ? `: Quản Trị Viên` : ' bạn'}`}</div>
+                <div className="errorMsg">{notification}</div>
+
                 <div className="home-userlist">
                     <table border="1">
                         <tbody>
@@ -217,7 +219,6 @@ const AdminUsers = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="errorMsg">{notification}</div>
             </main>
         </div>
     ) : (

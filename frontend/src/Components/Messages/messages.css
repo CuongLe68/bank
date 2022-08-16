@@ -13,9 +13,9 @@
 }
 
 .messages-container-header-logo {
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 600;
-    color: #666;
+    color: #4e65ff;
 }
 
 .messages-container-content {
@@ -213,6 +213,46 @@
 }
 
 /* Phần thông tin người dùng*/
-.messages-container-content-iffo {
+.messages-container-content-info {
     width: 30%;
+    letter-spacing: -0.25px;
+}
+
+.messages-container-content-info-logo {
+    margin: 20px 0;
+}
+
+.messages-container-content-info-logo img {
+    width: 70px;
+    height: 70px;
+}
+
+.messages-container-content-info-name {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 0;
+}
+
+.messages-container-content-info-content {
+    padding: 20px;
+    position: relative;
+}
+
+.messages-container-content-info-content-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgb(0, 0, 0, 0.72);
+    margin-bottom: 10px;
+}
+
+.messages-container-content-info-content-item {
+    display: flex;
+    padding: 10px 0;
+}
+
+.messages-container-content-info-content-item-tittle {
+    font-size: 16px;
+    width: 120px;
+    text-align: left;
+    font-weight: 600;
 }
