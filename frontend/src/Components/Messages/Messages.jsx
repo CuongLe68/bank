@@ -3,9 +3,20 @@ import Navbar from '../Navbar/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
+
+//gọi lại database
+import { getListMessages } from '../../redux/apiRequest';
+import { createAxios } from '../../createInstance';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../redux/authSlice';
 
 function Messages() {
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    const dispatch = useDispatch();
+    let axiosJWT = createAxios(user, dispatch, loginSuccess);
+
     const userList = useSelector((state) => state.users.users?.allUsers); //lấy tất cả user
 
     const [getName, setGetName] = useState('');
@@ -17,19 +28,15 @@ function Messages() {
     const [getDateResgister, setGetDateResgister] = useState('');
     const [getLastTime, setGetLastTime] = useState('');
 
+    const [valueSearch, setValueSearch] = useState(''); //lấy giá trị tìm kiếm
+
+    const socket = io.connect('http://localhost:5000');
+    const [messages, setMessages] = useState(''); //Gửi tin nhắn
+    const [contactUser, setContactUser] = useState(''); //chọn người nhắn tin
+    const [reset, setReset] = useState(true);
+
     //logic để tìm kiếm
-    const [valueSearch, setValueSearch] = useState('');
-
-    const usersArr = [];
-
-    userList.map((user) => {
-        if (!user.admin) {
-            usersArr.push(user);
-        }
-        return usersArr;
-    });
-
-    let usersSearch = usersArr.filter((user) => {
+    let usersSearch = userList.filter((user) => {
         return user.name.includes(valueSearch.trim().toUpperCase());
     });
 
@@ -40,6 +47,7 @@ function Messages() {
 
     //logic lấy thông tin user
     const handleShow = (user) => {
+        setContactUser(user.numberCard);
         let date = user.createdAt.slice(0, 7);
         let day = user.createdAt.slice(8, 10);
         let hours = Number(user.createdAt.slice(11, 13)) - 5;
@@ -61,8 +69,36 @@ function Messages() {
         setGetLastTime(user.lastTime);
     };
 
+    //logic nhắn tin
+    const msgList = useSelector((state) => state.users.users?.allMessages); //lấy tất cả tin nhắn
+
+    const hanldleSend = () => {
+        if (contactUser === '') {
+            alert('Lỗi: bạn chưa chọn người dùng');
+        } else if (messages === '') {
+            alert('Lỗi: Vui lòng nhập tin nhắn');
+        }
+        if (messages !== '' && contactUser !== '') {
+            socket.emit('admin-send-messages', {
+                messages: messages,
+                numberCard: contactUser,
+            });
+            setMessages('');
+        }
+        setReset(!reset);
+    };
+
+    useEffect(() => {
+        socket.on('server-send-messages', (data) => {
+            setReset(!reset);
+        });
+        getListMessages(user?.accessToken, dispatch, axiosJWT);
+        // eslint-disable-next-line
+    }, [reset]);
+
     return (
         <div className="messages-container">
+            {/* navbar */}
             <Navbar />
             <div className="messages-container-header">
                 <div className="messages-container-header-logo">Quản lí tin nhắn</div>
@@ -90,7 +126,7 @@ function Messages() {
                         )}
                     </div>
                     {usersSearch.map((user) => {
-                        return (
+                        return !user?.admin ? (
                             <div className="messages-container-content-list-item" onClick={() => handleShow(user)}>
                                 <div className="messages-container-content-list-item-logo">
                                     <img
@@ -100,6 +136,8 @@ function Messages() {
                                 </div>
                                 <div className="messages-container-content-list-item-name">{user.name}</div>
                             </div>
+                        ) : (
+                            <></>
                         );
                     })}
                 </div>
@@ -115,121 +153,53 @@ function Messages() {
                     </div>
 
                     <div className="messages-container-content-messages-content">
-                        <div className="messages-container-content-messages-content-client">
-                            <div className="messages-container-content-messages-content-client-logo">
-                                <img
-                                    src="https://play-lh.googleusercontent.com/nlTUhHmVerpGrB5zoARqnusy4GzAXvERR7RDHjMzm2q2wKouTjNzfOlvoRv7wKIlmtE"
-                                    alt="logo"
-                                />
-                            </div>
-                            <div className="messages-container-content-messages-content-client-msg">
-                                <p className="messages-container-content-messages-content-client-msg-text">alo</p>
-                                <p className="messages-container-content-messages-content-client-msg-text">
-                                    có onl ở đó k cu, tư vấn cho t mấy cái này với cu
-                                </p>
-                            </div>
-                        </div>
-                        <div className="messages-container-content-messages-content-admin">
-                            <div className="messages-container-content-messages-content-admin-msg">
-                                <p style={{ flex: 1 }}></p>
-                                <p className="messages-container-content-messages-content-admin-msg-text">gi rứa cu</p>
-                            </div>
-                        </div>
-
-                        {/* client 2 */}
-                        <div className="messages-container-content-messages-content-client">
-                            <div className="messages-container-content-messages-content-client-logo">
-                                <img
-                                    src="https://play-lh.googleusercontent.com/nlTUhHmVerpGrB5zoARqnusy4GzAXvERR7RDHjMzm2q2wKouTjNzfOlvoRv7wKIlmtE"
-                                    alt="logo"
-                                />
-                            </div>
-                            <div className="messages-container-content-messages-content-client-msg">
-                                <p className="messages-container-content-messages-content-client-msg-text">đây ku</p>
-                                <p className="messages-container-content-messages-content-client-msg-text">
-                                    Tư vấn thêm về các dịch vụ và chức năng của phần mềm này cho t hiểu đi man
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* admin 2 */}
-                        <div className="messages-container-content-messages-content-admin">
-                            <div className="messages-container-content-messages-content-admin-msg">
-                                <p style={{ flex: 1 }}></p>
-                                <p className="messages-container-content-messages-content-admin-msg-text">gi rứa cu</p>
-                            </div>
-                            <div className="messages-container-content-messages-content-admin-msg">
-                                <p style={{ flex: 1 }}></p>
-                                <p className="messages-container-content-messages-content-admin-msg-text">
-                                    gi rứa cu Tư vấn thêm về các dịch vụ và chức năng của phần nào: vd thử đi abcxyz...
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* client 3 */}
-                        <div className="messages-container-content-messages-content-client">
-                            <div className="messages-container-content-messages-content-client-logo">
-                                <img
-                                    src="https://play-lh.googleusercontent.com/nlTUhHmVerpGrB5zoARqnusy4GzAXvERR7RDHjMzm2q2wKouTjNzfOlvoRv7wKIlmtE"
-                                    alt="logo"
-                                />
-                            </div>
-                            <div className="messages-container-content-messages-content-client-msg">
-                                <p className="messages-container-content-messages-content-client-msg-text">đây ku</p>
-                                <p className="messages-container-content-messages-content-client-msg-text">
-                                    Tư vấn thêm về các dịch vụ và chức năng của phần mềm này cho t hiểu đi man
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* admin 3 */}
-                        <div className="messages-container-content-messages-content-admin">
-                            <div className="messages-container-content-messages-content-admin-msg">
-                                <p style={{ flex: 1 }}></p>
-                                <p className="messages-container-content-messages-content-admin-msg-text">gi rứa cu</p>
-                            </div>
-                            <div className="messages-container-content-messages-content-admin-msg">
-                                <p style={{ flex: 1 }}></p>
-                                <p className="messages-container-content-messages-content-admin-msg-text">
-                                    gi rứa cu Tư vấn thêm về các dịch vụ và chức năng
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* client 4 */}
-                        <div className="messages-container-content-messages-content-client">
-                            <div className="messages-container-content-messages-content-client-logo">
-                                <img
-                                    src="https://play-lh.googleusercontent.com/nlTUhHmVerpGrB5zoARqnusy4GzAXvERR7RDHjMzm2q2wKouTjNzfOlvoRv7wKIlmtE"
-                                    alt="logo"
-                                />
-                            </div>
-                            <div className="messages-container-content-messages-content-client-msg">
-                                <p className="messages-container-content-messages-content-client-msg-text">đây ku</p>
-                                <p className="messages-container-content-messages-content-client-msg-text">
-                                    Tư vấn thêm về các dịch vụ và chức năng của phần mềm này cho t hiểu đi man
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* admin 4 */}
-                        <div className="messages-container-content-messages-content-admin">
-                            <div className="messages-container-content-messages-content-admin-msg">
-                                <p style={{ flex: 1 }}></p>
-                                <p className="messages-container-content-messages-content-admin-msg-text">gi rứa cu</p>
-                            </div>
-                            <div className="messages-container-content-messages-content-admin-msg">
-                                <p style={{ flex: 1 }}></p>
-                                <p className="messages-container-content-messages-content-admin-msg-text">
-                                    gi rứa cu Tư vấn thêm về các dịch vụ và chức năng của phần nào: vd thử đi abcxyz...
-                                </p>
-                            </div>
-                        </div>
+                        {msgList.map((msg) => {
+                            return contactUser === msg.numberCard ? (
+                                !msg.admin ? (
+                                    <div key={msg._id} className="messages-container-content-messages-content-client">
+                                        <div className="messages-container-content-messages-content-client-logo">
+                                            <img
+                                                src="https://play-lh.googleusercontent.com/nlTUhHmVerpGrB5zoARqnusy4GzAXvERR7RDHjMzm2q2wKouTjNzfOlvoRv7wKIlmtE"
+                                                alt="logo"
+                                            />
+                                        </div>
+                                        <div className="messages-container-content-messages-content-client-msg">
+                                            <p className="messages-container-content-messages-content-client-msg-text">
+                                                {msg.messages}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="messages-container-content-messages-content-admin">
+                                        <div className="messages-container-content-messages-content-admin-msg">
+                                            <p style={{ flex: 1 }}></p>
+                                            <p className="messages-container-content-messages-content-admin-msg-text">
+                                                {msg.messages}
+                                            </p>
+                                        </div>
+                                    </div>
+                                )
+                            ) : (
+                                <></>
+                            );
+                        })}
                     </div>
 
                     <div className="messages-container-content-messages-footer">
-                        <input type="text" placeholder="messages..." />
-                        <button className="messages-container-content-messages-footer-btn">Gửi</button>
+                        <input
+                            type="text"
+                            placeholder="messages..."
+                            onChange={(e) => setMessages(e.target.value)}
+                            value={messages}
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                    hanldleSend();
+                                }
+                            }}
+                        />
+                        <button className="messages-container-content-messages-footer-btn" onClick={hanldleSend}>
+                            Gửi
+                        </button>
                     </div>
                 </div>
 

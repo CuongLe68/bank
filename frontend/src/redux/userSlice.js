@@ -6,6 +6,7 @@ const userSlice = createSlice({
     initialState: {
         users: {
             allUsers: null, //Chứa tất cả user
+            allMessages: null,
             isFetching: false,
             error: false,
         },
@@ -21,6 +22,20 @@ const userSlice = createSlice({
             state.users.allUsers = action.payload;
         },
         getUsersFalse: (state) => {
+            state.users.isFetching = false;
+            state.users.error = true;
+        },
+
+        //Lấy tất cả tin nhắn
+        getListMessagesStart: (state) => {
+            state.users.isFetching = true;
+        },
+        getListMessagesSuccess: (state, action) => {
+            state.users.isFetching = false;
+            state.users.error = true;
+            state.users.allMessages = action.payload;
+        },
+        getListMessagesFalse: (state) => {
             state.users.isFetching = false;
             state.users.error = true;
         },
@@ -60,6 +75,10 @@ export const {
     getUsersStart,
     getUsersSuccess,
     getUsersFalse,
+
+    getListMessagesStart,
+    getListMessagesSuccess,
+    getListMessagesFalse,
 
     deleteUserStart,
     deleteUserSuccess,

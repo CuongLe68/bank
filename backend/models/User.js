@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema(
     {
         username: {
             type: String,
-            required: true, //bắt buộc phải nhập
             minlength: 10,
             maxlength: 20,
             unique: true, //Khi người dùng gõ trùng username thì sẽ hiển thị lỗi
@@ -16,7 +15,6 @@ const userSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            required: true,
             minlength: 10,
             maxlength: 40,
             unique: true,

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 //socket.io
 import io from 'socket.io-client';
+import Chatbox from '../Chatbox/Chatbox';
 const socket = io.connect('http://localhost:5000'); //kết nối tới server socket
 
 function Header() {
@@ -47,6 +48,9 @@ function Header() {
 
     return (
         <div>
+            {/* chatbox */}
+            <Chatbox />
+
             <div className="user-navbar">
                 <Link to="/trangchu" className="user-navbar-top-home user-navbar-top-item">
                     <img

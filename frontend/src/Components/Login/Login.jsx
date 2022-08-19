@@ -41,7 +41,6 @@ const Login = () => {
             document.querySelector('.login-password').type = 'password';
         }
     };
-
     return (
         <div className="login-background">
             <section className="login-container">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { deleteUser, getAllUsers, updateUser } from '../../redux/apiRequest';
+import { deleteUser, getListMessages, getAllUsers, updateUser } from '../../redux/apiRequest';
 import './adminUsers.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -39,6 +39,7 @@ const AdminUsers = () => {
         }
         if (user?.accessToken) {
             //Phải có accessToken khi đăng nhập mới lấy tất cả user được
+            getListMessages(user?.accessToken, dispatch, axiosJWT);
             getAllUsers(user?.accessToken, dispatch, axiosJWT);
         }
         // eslint-disable-next-line

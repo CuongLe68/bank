@@ -21,6 +21,9 @@ import {
     updateUserFalse,
     updateUserStart,
     updateUserSuccess,
+    getListMessagesStart,
+    getListMessagesSuccess,
+    getListMessagesFalse,
 } from './userSlice';
 
 //Xử lý đăng ký
@@ -76,6 +79,19 @@ export const getAllUsers = async (accessToken, dispatch, axiosJWT) => {
         dispatch(getUsersSuccess(res.data));
     } catch (error) {
         dispatch(getUsersFalse());
+    }
+};
+
+//Lấy tất cả tin nhắn
+export const getListMessages = async (accessToken, dispatch, axiosJWT) => {
+    dispatch(getListMessagesStart());
+    try {
+        const res = await axiosJWT.get('/v1/user/messages', {
+            headers: { token: `Bearer ${accessToken}` },
+        });
+        dispatch(getListMessagesSuccess(res.data));
+    } catch (error) {
+        dispatch(getListMessagesFalse());
     }
 };
 

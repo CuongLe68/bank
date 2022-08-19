@@ -1,5 +1,6 @@
 const { findById } = require('../models/User');
 const User = require('../models/User');
+const listMessages = require('../models/Messages');
 
 const userController = {
     //Lấy tất cả tài khoản
@@ -7,6 +8,16 @@ const userController = {
         try {
             const user = await User.find(); //tìm và lấy tất cả các tài khoản trong User
             return res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
+    //Lấy tất cả tin nhắn
+    getAllMessages: async (req, res) => {
+        try {
+            const listMsg = await listMessages.find();
+            return res.status(200).json(listMsg);
         } catch (error) {
             res.status(500).json(error);
         }

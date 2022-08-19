@@ -110,6 +110,42 @@ io.on('connection', (socket) => {
         socket.emit('server-send-money-success', data);
     });
 
+    //Lắng nghe sự kiện người dùng gửi tin nhắn lên
+    const listMessages = require('./models/Messages'); //gọi db
+
+    socket.on('client-send-messages', async (data) => {
+        const user = await Math.floor(Math.random() * 10000000000000);
+        const email = await Math.floor(Math.random() * 10000000000000);
+
+        const newMessages = await new listMessages({
+            admin: false,
+            username: user,
+            email: email,
+            messages: data.messages,
+            numberCard: data.numberCard,
+        });
+
+        await newMessages.save();
+        io.sockets.emit('server-send-messages', data);
+    });
+    //Lắng nghe sự kiện admin gửi tin nhắn lên
+    socket.on('admin-send-messages', async (data) => {
+        const user = await Math.floor(Math.random() * 10000000000000);
+        const email = await Math.floor(Math.random() * 10000000000000);
+
+        const newMessages = await new listMessages({
+            admin: true,
+            username: user,
+            email: email,
+            messages: data.messages,
+            numberCard: data.numberCard,
+        });
+
+        await newMessages.save();
+        socket.broadcast.emit(`server-admin-send-messages-to-${data.numberCard}`, data.messages);
+    });
+
+    //lắng nghe sự kiện người dùng thoát
     socket.on('disconnect', () => {
         console.log(socket.id + ' đã thoát');
     });
